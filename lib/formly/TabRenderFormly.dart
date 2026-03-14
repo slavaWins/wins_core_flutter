@@ -13,7 +13,7 @@ import 'FormlyIcons.dart';
 class TabRenderFormly extends StatefulWidget {
   final String controllerEndpointName;
   final int projectId;
-  final String title;
+  final String? title;
   final bool? isShowTitle;
   final Function(dynamic)? onResponseUpdateJson;
 
@@ -21,7 +21,7 @@ class TabRenderFormly extends StatefulWidget {
     Key? key,
     required this.controllerEndpointName,
     required this.projectId,
-    required this.title,
+      this.title,
       this.isShowTitle,
     this.onResponseUpdateJson,
   }) : super(key: key);
@@ -90,7 +90,9 @@ class _TabRenderFormlyState extends State<TabRenderFormly> {
       child: Column(
 
       children: [
-        Text(  widget.title),
+
+        if(widget.title!=null)
+          Text(  widget.title!),
 
         if (!isLoaded)
           LoadingAnimationWidget.staggeredDotsWave(
@@ -101,13 +103,12 @@ class _TabRenderFormlyState extends State<TabRenderFormly> {
         if (isLoaded)
           ...responseTabResult!.value!.tabs.map(
             (field) => CupertinoListTile(
-
               padding: EdgeInsets.all(AppStyle().paddingCard),
               onTap: () {
                 Navigator.of(context, rootNavigator: true).push(
                   CupertinoPageRoute(
                     builder: (context) => FormPageRenderFormly(
-                      title: widget.title,
+                      title: widget.title ?? "",
                       controllerEndpointName: widget.controllerEndpointName,
                       projectId: widget.projectId,
                       tag: field.tag!,

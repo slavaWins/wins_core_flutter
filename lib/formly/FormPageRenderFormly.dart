@@ -7,6 +7,7 @@ import '../style/AppStyle.dart';
 import 'BuisnesLayer/ResponseContractOfFormlyFieldResponse.dart';
 import 'FormFormly.dart';
 import 'FormlyApiService.dart';
+import 'FormlyNavigationConfig.dart';
 
 class FormlyLocalResponse {
   final bool isSuccess;
@@ -55,13 +56,11 @@ class FormPageRenderFormly extends StatefulWidget {
 }
 
 class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
-
   final GlobalKey<FormFormlyState> _formKey = GlobalKey();
 
   late final String baseUrl = WinsCoreConfig.domainApi;
   late bool isLoaded = false;
   late final ResponseContractOfFormlyFieldResponse? responseFormData;
-
 
   late bool isValid = false;
 
@@ -70,7 +69,6 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
   @override
   void initState() {
     super.initState();
-
 
     formlyService = FormlyApiService(
       controllerEndpointName: widget.controllerEndpointName,
@@ -81,12 +79,9 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
     AfterInit();
   }
 
-
   void AfterInit() async {
-
     responseFormData = await formlyService!.getFormConfigurationFromServer();
     setState(() {
-
       isLoaded = formlyService!.isLoaded;
     });
   }
@@ -101,17 +96,64 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
     return FormlyLocalResponse.error(errorMessage: "Нет данных отправки");
   }
 
-
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor:  Color.fromARGB(255, 48, 48, 48),
+      backgroundColor: Color.fromARGB(255, 48, 48, 48),
       child: SingleChildScrollView(
         padding: EdgeInsetsGeometry.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16),
+
+            if (FormlyNavigationConfig.navigationBuilder != null)
+              FormlyNavigationConfig.navigationBuilder!(
+                context,
+                widget.title,
+                isValid,
+                () async {
+                  var r = await makSubmit();
+                  if (r.isSuccess) {
+                    Navigator.of(context).pop();
+                  }
+                },
+                () => Navigator.of(context).pop(),
+              )
+            else
+              CupertinoListTile(
+                padding: EdgeInsetsGeometry.all(0),
+                title: Text(widget.title),
+
+                // colorText: Colors.white,
+                trailing: CupertinoButton.filled(
+                  child: Icon(Icons.check),
+                  //: ClubIcons.check,
+                  //size: 55,
+                  color: isValid ? AppStyle().accent : Colors.grey,
+                  onPressed: () async {
+                    // if(!isValid)return;
+
+                    var r = await makSubmit();
+                    if (r.isSuccess) {
+                      Navigator.of(context).pop();
+                    } else {
+                      // showBaseInfoDialog(context, r.errorMessage ?? "na001");
+                    }
+                  },
+                ),
+                leadingSize: 44,
+                leading: CupertinoButton.filled(
+                  child: Icon(Icons.arrow_back_ios),
+                  color: Colors.transparent,
+                  //: ClubIcons.check,
+                  //size: 55,
+                 // color: isValid ? AppStyle().accent : Colors.grey,
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
 
             /*
             ClubNavigation(
@@ -120,9 +162,6 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
               isPopSupport: true,
               padding: 0,
               iconPop: ClubIcons.close,
-
-
-
               trilingCustom: CircleButtonClubColored(
                 icon: ClubIcons.check,
                 size: 55,
@@ -139,7 +178,7 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
                 },
               ),
             ),
-*/
+            */
             SizedBox(height: 60),
 
             if (!isLoaded)
@@ -155,7 +194,6 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
                 onSubmit: (x) {},
 
                 onValidChange: (x) {
-
                   setState(() {
                     isValid = x;
                   });
