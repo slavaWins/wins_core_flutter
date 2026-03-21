@@ -2,6 +2,10 @@
 import 'package:flutter/cupertino.dart';
 
 class FormlyNavigationConfig {
+
+  static Color? FormMrpEdit_Color_Background;
+  static Color? FormMrpEdit_Color_Content;
+
   static Widget Function(
       BuildContext context,
       String title,
@@ -10,15 +14,4 @@ class FormlyNavigationConfig {
       VoidCallback onClose,
       )? navigationBuilder;
 
-  static void configure({
-    Widget Function(
-        BuildContext context,
-        String title,
-        bool isValid,
-        VoidCallback onSubmit,
-        VoidCallback onClose,
-        )? navigationBuilder,
-  }) {
-    FormlyNavigationConfig.navigationBuilder = navigationBuilder;
-  }
 }

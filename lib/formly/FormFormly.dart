@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import 'package:wins_core_flutter/style/AppStyle.dart';
 import 'BuisnesLayer/FormlyField.dart';
 import 'BuisnesLayer/FormlyFieldResponse.dart';
 import 'ElementFormly.dart';
@@ -80,7 +81,7 @@ class FormFormlyState extends State<FormFormly> {
 
         if (widget.isShowButtonSave ?? false)
           CupertinoButton(
-            child: Text(widget.formData.btnName ?? "Ok"),
+            child: Text(widget.formData.btnName ?? "Ok", style:  AppStyle().body1(color: widget.color)),
             onPressed: () {
               submitForm();
             },

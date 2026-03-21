@@ -99,8 +99,9 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
 
   @override
   Widget build(BuildContext context) {
+
     return CupertinoPageScaffold(
-      backgroundColor: Color.fromARGB(255, 48, 48, 48),
+      backgroundColor: FormlyNavigationConfig.FormMrpEdit_Color_Background ??  AppStyle().white,
       child: SingleChildScrollView(
         padding: EdgeInsetsGeometry.all(20),
         child: Column(
@@ -181,16 +182,16 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
             ),
             */
             SizedBox(height: 60),
-
             if (!isLoaded)
               LoadingAnimationWidget.staggeredDotsWave(
                 color: AppStyle().black,
                 size: 200,
               ),
 
+
             if (isLoaded && responseFormData != null)
               FormFormly(
-                color: Colors.white,
+                color: FormlyNavigationConfig.FormMrpEdit_Color_Content ?? AppStyle().black,
                 formData: responseFormData!.value!,
                 onSubmit: (x) {},
 

@@ -26,6 +26,7 @@ class AppStyle {
 
   double  paddingScreen = 10;
   double  paddingCard = 14; 
+  double  radiusCard = 8;
   double  input_label_margin_bottom = 11;
 
   Color base_messagebox_background_black = Color.fromARGB(255, 14, 22,33);
