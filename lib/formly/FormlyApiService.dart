@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -11,40 +10,45 @@ import 'BuisnesLayer/ResponseContractOfFormlyFieldResponse.dart';
 import 'FormPageRenderFormly.dart';
 
 
-class FormlyApiService  extends ChangeNotifier  {
+class FormlyApiService extends ChangeNotifier {
 
 
-  final String controllerEndpointName;
-  final String tag;
-  final int projectId;
+  final String? controllerEndpointName;
+  final String? tag;
+  final int? projectId;
+  final String? customFormHandleEndpoint;
 
 
   late final String baseUrl = WinsCoreConfig.domainApi;
   late bool isLoaded = false;
-  late  ResponseContractOfFormlyFieldResponse? responseFormData;
+  late ResponseContractOfFormlyFieldResponse? responseFormData;
 
   final Function(dynamic)? onResponseUpdateJson;
 
-   FormlyApiService({
-     required this.controllerEndpointName,
-     required this.projectId,
-     required this.tag,
-      this.onResponseUpdateJson});
+  FormlyApiService({
+    this.controllerEndpointName,
+    this.projectId,
+    this.tag,
+    this.customFormHandleEndpoint,
+    this.onResponseUpdateJson});
 
   Future<FormlyLocalResponse> makSubmit(dynamic values) async {
-
-      return await sendTagUpdateValue(values);
-
+    return await sendTagUpdateValue(values);
   }
 
   Future<FormlyLocalResponse> sendTagUpdateValue(dynamic dataSend) async {
     try {
-      var url =
-          baseUrl +
-              controllerEndpointName +
-              "/" +
-              tag +
-              "/update";
+
+      String url = "";
+
+      if (controllerEndpointName != null) {
+        url = baseUrl + controllerEndpointName! + "/" + tag! + "/update";
+      }
+
+      if (customFormHandleEndpoint != null) {
+        url = baseUrl + customFormHandleEndpoint! + "/Handle";
+      }
+
 
       print(url);
       print(dataSend);
@@ -54,7 +58,9 @@ class FormlyApiService  extends ChangeNotifier  {
       print(request.body);
 
       final token = WinsCoreConfig.jwt;
-      request.headers['Authorization'] = 'Bearer $token';
+      if (token != null) {
+        request.headers['Authorization'] = 'Bearer $token';
+      }
       request.headers['Content-Type'] = 'application/json';
       request.headers['Accept'] = 'application/json';
 
@@ -70,10 +76,10 @@ class FormlyApiService  extends ChangeNotifier  {
         print(isSuccess);
 
         if (isSuccess == false) {
-
           toastification.show(
             icon: Icon(Icons.warning_amber),
-            title: Text(resp["errorMessage"], style: AppStyle().body1(color: Colors.white)),
+            title: Text(resp["errorMessage"],
+                style: AppStyle().body1(color: Colors.white)),
             type: ToastificationType.error,
             animationDuration: Duration(milliseconds: 200),
             autoCloseDuration: Duration(seconds: 3),
@@ -98,10 +104,10 @@ class FormlyApiService  extends ChangeNotifier  {
         throw Exception('Failed to load tabs');
       }
     } catch (e) {
-
       toastification.show(
         icon: Icon(Icons.warning_amber),
-        title: Text("Ошибка сервера", style: AppStyle().body1(color: Colors.white)),
+        title: Text(
+            "Ошибка сервера", style: AppStyle().body1(color: Colors.white)),
         type: ToastificationType.warning,
         animationDuration: Duration(milliseconds: 200),
         autoCloseDuration: Duration(seconds: 2),
@@ -115,23 +121,30 @@ class FormlyApiService  extends ChangeNotifier  {
   }
 
 
-  Future<ResponseContractOfFormlyFieldResponse> getFormConfigurationFromServer() async {
-
-
+  Future<
+      ResponseContractOfFormlyFieldResponse> getFormConfigurationFromServer() async {
     print("getFormConfigurationFromServer");
     try {
-      var url =
-          baseUrl +
-              controllerEndpointName +
-              "/form/" +
-              (projectId.toString()) +
-              "/" +
-              tag;
+      String url = "";
+
+      if (controllerEndpointName != null) {
+        url = baseUrl + controllerEndpointName! + "/form/" +
+            (projectId.toString()) + "/" + tag!;
+      }
+
+      if (customFormHandleEndpoint != null) {
+        url = baseUrl + customFormHandleEndpoint! + "/Form";
+      }
+
 
       var request = http.Request('GET', Uri.parse(url));
 
       final token = WinsCoreConfig.jwt;
-      request.headers['Authorization'] = 'Bearer $token';
+
+      if (token != null) {
+        request.headers['Authorization'] = 'Bearer $token';
+      }
+
 
       var httpResponse = await request.send();
       final responseBody = await httpResponse.stream
@@ -139,18 +152,17 @@ class FormlyApiService  extends ChangeNotifier  {
 
       if (httpResponse.statusCode == 200) {
         final jsonData = jsonDecode(responseBody);
-      //  print(jsonData);
+        //  print(jsonData);
         responseFormData = ResponseContractOfFormlyFieldResponse.fromJson(
           jsonData,
         );
 
-   //     print(responseFormData);
+        //     print(responseFormData);
 
         isLoaded = true;
 
         notifyListeners();
         return responseFormData!;
-
       } else {
         print("Request failed with status: ${httpResponse.statusCode}");
         // Можно выбросить исключение или обработать ошибку

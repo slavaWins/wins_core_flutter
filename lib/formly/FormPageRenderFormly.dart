@@ -74,6 +74,7 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
       controllerEndpointName: widget.controllerEndpointName,
       projectId: widget.projectId,
       tag: widget.tag,
+      onResponseUpdateJson: widget.onResponseUpdateJson,
     );
 
     AfterInit();

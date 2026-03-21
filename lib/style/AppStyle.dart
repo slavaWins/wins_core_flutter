@@ -25,7 +25,14 @@ class AppStyle {
 
 
   double  paddingScreen = 10;
-  double  paddingCard = 14;
+  double  paddingCard = 14; 
+  double  input_label_margin_bottom = 11;
+
+  Color base_messagebox_background_black = Color.fromARGB(255, 14, 22,33);
+
+  Color get backgroundMessageBox => theme == AppTheme.light
+      ? base_white
+      : base_messagebox_background_black;
 
 
 
@@ -90,21 +97,25 @@ class AppStyle {
   }
 
 
+  double base_font_scale_h = 1;
+  double base_font_szie_h1 = 36;
+  FontWeight font_WeightNormal =  FontWeight.w400;
 
 
   TextStyle h1({Color? color}) {
     return TextStyle(
-      fontSize: 36,
+      fontSize: base_font_szie_h1 * base_font_scale_h,
       fontWeight: FontWeight.w400,
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 
   TextStyle h2({Color? color}) {
     return TextStyle(
-      fontSize: 32,
+      fontSize: 32 * base_font_scale_h,
       fontWeight: FontWeight.w400,
       color: color ?? black,
       fontFamily: "Main",
@@ -114,7 +125,7 @@ class AppStyle {
 
   TextStyle h3({Color? color}) {
     return TextStyle(
-      fontSize: 28,
+      fontSize: 28 * base_font_scale_h,
       fontWeight: FontWeight.w400,
       color: color ?? black,
       fontFamily: "Main",
@@ -125,7 +136,7 @@ class AppStyle {
 
   TextStyle h4({Color? color}) {
     return TextStyle(
-      fontSize: 24,
+      fontSize: 24 * base_font_scale_h,
       fontWeight: FontWeight.w500,
       color: color ?? black,
       fontFamily: "Main",
@@ -147,7 +158,7 @@ class AppStyle {
   TextStyle body1({Color? color}) {
     return TextStyle(
       fontSize: 16,
-      fontWeight: FontWeight.w400,
+      fontWeight: font_WeightNormal,
       color: color ?? black,
       fontFamily: "Main",
       height: 1.2,
@@ -158,7 +169,7 @@ class AppStyle {
   TextStyle body2({Color? color}) {
     return TextStyle(
       fontSize: 14,
-      fontWeight: FontWeight.w400,
+      fontWeight: font_WeightNormal,
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
@@ -168,7 +179,7 @@ class AppStyle {
   TextStyle body3({Color? color}) {
     return TextStyle(
       fontSize: 12,
-      fontWeight: FontWeight.w400,
+      fontWeight: font_WeightNormal,
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
@@ -190,7 +201,7 @@ class AppStyle {
   TextStyle inputLabel({Color? color}) {
     return TextStyle(
       fontSize: 14,
-      fontWeight: FontWeight.w400,
+      fontWeight: font_WeightNormal,
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
