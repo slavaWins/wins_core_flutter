@@ -117,10 +117,16 @@ class _ElementFormlyState extends State<ElementFormly> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.data.hide_ == true){
+      //return Text("XXX HIDE");
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 0,
       children: [
+        //Text(widget.data.key.toString()),
         SizedBox(height: 16),
 
         if (widget.data.key != "id") ...[

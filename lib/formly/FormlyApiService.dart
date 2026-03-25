@@ -100,8 +100,25 @@ class FormlyApiService extends ChangeNotifier {
         return FormlyLocalResponse.success();
       } else {
         print("Request failed with status: ${httpResponse.statusCode}");
+
+
+        toastification.show(
+          icon: Icon(Icons.warning_amber),
+          title: Text("Не удалось отправить данные",
+              style: AppStyle().body1(color: Colors.white)),
+          type: ToastificationType.error,
+          animationDuration: Duration(milliseconds: 200),
+          autoCloseDuration: Duration(seconds: 3),
+          style: ToastificationStyle.fillColored,
+        );
+
+
+        return FormlyLocalResponse.error(
+          errorMessage: "Не удалось отправить данные",
+
+        );
         // Можно выбросить исключение или обработать ошибку
-        throw Exception('Failed to load tabs');
+        //throw Exception('Failed to load tabs');
       }
     } catch (e) {
       toastification.show(

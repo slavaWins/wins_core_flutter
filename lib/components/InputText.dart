@@ -57,6 +57,7 @@ class _InputTextState extends State<InputText>
   void initState() {
     super.initState();
 
+
     _focusNode = FocusNode();
     _focusNode.addListener(_onFocusChange);
 
@@ -104,7 +105,7 @@ class _InputTextState extends State<InputText>
       children: [
 
 
-        if (widget.label != null) ...[
+        if (widget.label != null && widget.label != "") ...[
           Text(
             widget.label!,
             style: TextStyle(
