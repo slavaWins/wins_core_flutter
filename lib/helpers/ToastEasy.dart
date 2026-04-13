@@ -7,7 +7,7 @@ import '../style/AppStyle.dart';
 class ToastEasy {
   ToastEasy.Info(String text, IconData icon) {
     toastification.show(
-      icon: Icon(icon),
+      icon: Icon(icon, color: AppStyle().black),
       title: Text(text, style: AppStyle().body1(color: AppStyle().black)),
       type: ToastificationType.custom(
         "n",
@@ -24,7 +24,7 @@ class ToastEasy {
 
   ToastEasy.Error(String text) {
     toastification.show(
-      icon: Icon(Icons.error_outline),
+      icon: Icon(Icons.error_outline, color: AppStyle().black),
       title: Text(text, style: AppStyle().body1(color: AppStyle().black)),
       type: ToastificationType.error,
       animationDuration: Duration(milliseconds: 200),

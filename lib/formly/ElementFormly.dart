@@ -60,7 +60,20 @@ class _ElementFormlyState extends State<ElementFormly> {
     if (widget.data.type == "date") {
       widget.data.type = "string";
     }
+
+
+    ValidCheckOnStart();
   }
+
+
+  void ValidCheckOnStart() async {
+    await Future.delayed(Duration(milliseconds: 200));
+    ValidateValue(valResult);
+    if (widget.onValidChange != null) {
+      widget.onValidChange!(isInvalid == null);
+    }
+  }
+
 
   void ValueSetTo(dynamic val) {
     valResult = val;
@@ -261,14 +274,26 @@ class _ElementFormlyState extends State<ElementFormly> {
   }
 
   void _showSelectDialog() {
+
+    /*
+    var xz = widget.data.props!.options;
+    xz = [...xz, ...xz];
+    xz = [...xz, ...xz];
+    xz = [...xz, ...xz];
+    widget.data.props!.options = xz;
+*/
+
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
-        title: Text(widget.data.props?.label ?? 'Выберите'),
+
+        title: Text(widget.data.props?.label ?? 'Выберите', style: AppStyle().body0(color: Colors.black)),
         actions:
             widget.data.props?.options
                 .map(
                   (option) => CupertinoActionSheetAction(
+
+
                     onPressed: () {
                       setState(() {
                         valResult = option.value ?? "";
@@ -276,14 +301,14 @@ class _ElementFormlyState extends State<ElementFormly> {
                       widget.onChange?.call(option.value ?? "");
                       Navigator.pop(context);
                     },
-                    child: Text(option.label ?? "na"),
+                    child: Text(option.label , style: AppStyle().body1(color: Colors.black)),
                   ),
                 )
                 .toList() ??
             [],
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Отмена'),
+          child:   Text('Отмена', style: AppStyle().body0(color: Colors.black)),
         ),
       ),
     );

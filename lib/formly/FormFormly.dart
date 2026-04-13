@@ -104,7 +104,6 @@ class FormFormlyState extends State<FormFormly> {
 
 
   dynamic collectFormData() {
-    print("XX _collectFormData");
     return _formValues;
   }
 }

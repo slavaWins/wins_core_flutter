@@ -69,7 +69,7 @@ class AvatarElement extends StatelessWidget {
             height: size,
             child: Center(
               child: Text(
-                name!.substring(0, 2),
+                name!.substring(0, 1),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: size / 3,
