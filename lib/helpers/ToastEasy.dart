@@ -5,6 +5,10 @@ import 'package:toastification/toastification.dart';
 import '../style/AppStyle.dart';
 
 class ToastEasy {
+
+  static AlignmentGeometry alignmentGeometryDef = AlignmentGeometry.bottomRight;
+
+
   ToastEasy.Info(String text, IconData icon) {
     toastification.show(
       icon: Icon(icon, color: AppStyle().black),
@@ -17,7 +21,7 @@ class ToastEasy {
       animationDuration: Duration(milliseconds: 200),
       autoCloseDuration: Duration(seconds: 3),
       style: ToastificationStyle.fillColored,
-      alignment: AlignmentGeometry.bottomRight,
+      alignment: alignmentGeometryDef,
 
     );
   }
@@ -30,7 +34,7 @@ class ToastEasy {
       animationDuration: Duration(milliseconds: 200),
       autoCloseDuration: Duration(seconds: 3),
       style: ToastificationStyle.fillColored,
-      alignment: AlignmentGeometry.bottomRight,
+      alignment: alignmentGeometryDef,
     );
   }
 }
