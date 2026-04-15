@@ -284,16 +284,18 @@ class _ElementFormlyState extends State<ElementFormly> {
 */
 
     showCupertinoModalPopup(
+
+      
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
 
-        title: Text(widget.data.props?.label ?? 'Выберите', style: AppStyle().body0(color: Colors.black)),
+
+        title: Text(widget.data.props?.label ?? 'Выберите', style: AppStyle().body0(color: Colors.white)),
         actions:
             widget.data.props?.options
                 .map(
                   (option) => CupertinoActionSheetAction(
-
-
+                    
                     onPressed: () {
                       setState(() {
                         valResult = option.value ?? "";
@@ -301,14 +303,16 @@ class _ElementFormlyState extends State<ElementFormly> {
                       widget.onChange?.call(option.value ?? "");
                       Navigator.pop(context);
                     },
-                    child: Text(option.label , style: AppStyle().body1(color: Colors.black)),
+                    child: Text(option.label , style: AppStyle().body1(color: Colors.white)),
                   ),
                 )
                 .toList() ??
             [],
         cancelButton: CupertinoActionSheetAction(
+
           onPressed: () => Navigator.pop(context),
-          child:   Text('Отмена', style: AppStyle().body0(color: Colors.black)),
+          child:   Text('Отмена', style: AppStyle().body0(color: Colors.white)),
+
         ),
       ),
     );
