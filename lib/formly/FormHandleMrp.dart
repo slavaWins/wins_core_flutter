@@ -6,7 +6,6 @@ import 'package:wins_core_flutter/formly/FormFormly.dart';
 import 'package:wins_core_flutter/formly/FormlyApiService.dart';
 import 'package:wins_core_flutter/style/AppStyle.dart';
 
-
 class FormHandleMrp extends StatefulWidget {
   final FormlyApiService formlyService;
   final bool isDefaultButton;
@@ -41,8 +40,6 @@ class _FormHandleMrpState extends State<FormHandleMrp> {
   }
 
   Future<void> SendData() async {
-
-
     print("senddata 0");
 
     if (!isValid) return;
@@ -85,7 +82,11 @@ class _FormHandleMrpState extends State<FormHandleMrp> {
   @override
   Widget build(BuildContext context) {
     if (!widget.formlyService.isLoaded || responseFormData == null)
-      return Align(child: CircularProgressIndicator(color: widget.color ?? AppStyle().black));
+      return Align(
+        child: CircularProgressIndicator(
+          color: widget.color ?? AppStyle().black,
+        ),
+      );
 
     return Container(
       //height: 400,
@@ -112,15 +113,17 @@ class _FormHandleMrpState extends State<FormHandleMrp> {
             ),
           ),
 
-
           if (widget.buttonWidget != null && !isLoading)
-            GestureDetector(
-              //onTap: SendData,
-              onTapDown: (x){
-              SendData();
-            }, child: widget.buttonWidget!, ),
+            Listener(
+              onPointerDown: (_) {
+                print("Click in core");
+                SendData();
+              },
+              child: widget.buttonWidget!,
+            ),
 
-          if (isLoading) CircularProgressIndicator(color: widget.color ?? AppStyle().black),
+          if (isLoading)
+            CircularProgressIndicator(color: widget.color ?? AppStyle().black),
         ],
       ),
     );
