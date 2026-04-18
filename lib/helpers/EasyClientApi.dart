@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:wins_core_flutter/WinsCoreConfig.dart';
 import 'package:wins_core_flutter/helpers/ToastEasy.dart';
 
-Future<dynamic> EasyClientApi(String endpoint) async {
+Future<dynamic> EasyClientApi(String endpoint, dynamic bodySend) async {
   try {
     String url = WinsCoreConfig.domainApi + endpoint;
 
@@ -16,6 +16,7 @@ Future<dynamic> EasyClientApi(String endpoint) async {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
+           body:  (bodySend!=null) ?  jsonEncode( bodySend) : null,
         )
         .timeout(Duration(seconds: 10)); // Добавьте таймаут
 
