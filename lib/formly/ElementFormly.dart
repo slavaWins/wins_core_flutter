@@ -290,7 +290,7 @@ class _ElementFormlyState extends State<ElementFormly> {
       builder: (BuildContext context) => CupertinoActionSheet(
 
 
-        title: Text(widget.data.props?.label ?? 'Выберите', style: AppStyle().body0(color: Colors.white)),
+        title: Text(widget.data.props?.label ?? 'Выберите', style: AppStyle().body0( )),
         actions:
             widget.data.props?.options
                 .map(
@@ -303,7 +303,7 @@ class _ElementFormlyState extends State<ElementFormly> {
                       widget.onChange?.call(option.value ?? "");
                       Navigator.pop(context);
                     },
-                    child: Text(option.label , style: AppStyle().body1(color: Colors.white)),
+                    child: Text(option.label , style: AppStyle().body1( )),
                   ),
                 )
                 .toList() ??
@@ -311,7 +311,7 @@ class _ElementFormlyState extends State<ElementFormly> {
         cancelButton: CupertinoActionSheetAction(
 
           onPressed: () => Navigator.pop(context),
-          child:   Text('Отмена', style: AppStyle().body0(color: Colors.white)),
+          child:   Text('Отмена', style: AppStyle().body0( )),
 
         ),
       ),
