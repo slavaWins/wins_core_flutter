@@ -23,6 +23,7 @@ class FormlyProps {
     this.description,
     this.placeholder,
     this.required_,
+    this.isCanBeNull,
     this.options = const [],
   });
 
@@ -51,6 +52,7 @@ class FormlyProps {
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
   bool? required_;
+  bool? isCanBeNull;
 
   List<OptionFormly> options;
 
@@ -61,6 +63,7 @@ class FormlyProps {
       other.label == label &&
       other.description == description &&
       other.placeholder == placeholder &&
+      other.isCanBeNull == isCanBeNull &&
       other.required_ == required_;
 
   @override
@@ -72,10 +75,11 @@ class FormlyProps {
       (description == null ? 0 : description!.hashCode) +
       (placeholder == null ? 0 : placeholder!.hashCode) +
       (required_ == null ? 0 : required_!.hashCode) +
+      (isCanBeNull == null ? 0 : isCanBeNull!.hashCode) +
       (options.hashCode);
 
   @override
-  String toString() => 'FormlyProps[minLength=$minLength, maxLength=$maxLength, label=$label, description=$description, placeholder=$placeholder, required_=$required_, options=$options]';
+  String toString() => 'FormlyProps[minLength=$minLength, maxLength=$maxLength, label=$label, description=$description, placeholder=$placeholder, required_=$required_, isCanBeNull=$isCanBeNull, options=$options]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -109,6 +113,11 @@ class FormlyProps {
     } else {
       json[r'required'] = null;
     }
+    if (this.isCanBeNull != null) {
+      json[r'isCanBeNull'] = this.isCanBeNull;
+    } else {
+      json[r'isCanBeNull'] = null;
+    }
     json[r'options'] = this.options;
     return json;
   }
@@ -140,6 +149,7 @@ class FormlyProps {
         description: mapValueOfType<String>(json, r'description'),
         placeholder: mapValueOfType<String>(json, r'placeholder'),
         required_: mapValueOfType<bool>(json, r'required'),
+        isCanBeNull: mapValueOfType<bool>(json, r'isCanBeNull'),
         options: OptionFormly.listFromJson(json[r'options']),
       );
     }

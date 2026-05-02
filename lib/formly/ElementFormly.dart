@@ -47,7 +47,29 @@ class _ElementFormlyState extends State<ElementFormly> {
     // TODO: implement initState
     super.initState();
 
+
     valResult = widget.val ?? "";
+
+    if (widget.data.type == "select") {
+
+      var _selectedNowHave = widget.data.props!.options          .where(            (opt) => opt.value.toString() == valResult.toString()).firstOrNull;
+      if(_selectedNowHave==null){
+        print("select value not init start. Autofix");
+        _selectedNowHave =  widget.data.props!.options.firstOrNull;
+
+        if(_selectedNowHave!=null) {
+          valResult = _selectedNowHave.value.toString();
+          print(valResult);
+          widget.onChange?.call(valResult);
+        }else{
+          print("_selectedNowHave в опшинах нет вариантов!!!");
+        }
+      }
+
+    }
+
+
+
 
     _controller = TextEditingController(text: valResult.toString());
 
@@ -90,6 +112,11 @@ class _ElementFormlyState extends State<ElementFormly> {
 
   void ValidateValue(dynamic val) {
     var props = widget.data.props!;
+
+    if (props.isCanBeNull == true && val.toString().length==0) {
+      isInvalid = null;
+      return;
+    }
 
     if (props.minLength != null) {
       if (val.toString().length < props.minLength!) {
