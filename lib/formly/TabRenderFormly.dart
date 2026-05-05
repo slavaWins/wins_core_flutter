@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -102,11 +102,11 @@ class _TabRenderFormlyState extends State<TabRenderFormly> {
 
         if (isLoaded)
           ...responseTabResult!.value!.tabs.map(
-            (field) => CupertinoListTile(
-              padding: EdgeInsets.all(AppStyle().paddingCard),
+            (field) => ListTile(
+              //padding: EdgeInsets.all(AppStyle().paddingCard),
               onTap: () {
                 Navigator.of(context, rootNavigator: true).push(
-                  CupertinoPageRoute(
+                  MaterialPageRoute(
                     builder: (context) => FormPageRenderFormly(
                       title: widget.title ?? "",
                       controllerEndpointName: widget.controllerEndpointName,
@@ -133,7 +133,7 @@ class _TabRenderFormlyState extends State<TabRenderFormly> {
                   ),
 
                     const SizedBox(width: 8),*/
-                    Icon(CupertinoIcons.forward, color: AppStyle().black, size: 20),
+                    Icon(Icons.forward, color: AppStyle().black, size: 20),
 
                 ],
               ),

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -100,9 +100,9 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
   @override
   Widget build(BuildContext context) {
 
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: FormlyNavigationConfig.FormMrpEdit_Color_Background ??  AppStyle().white,
-      child: SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsetsGeometry.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,16 +123,24 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
                 () => Navigator.of(context).pop(),
               )
             else
-              CupertinoListTile(
-                padding: EdgeInsetsGeometry.all(0),
+              ListTile(
+               // padding: EdgeInsetsGeometry.all(0),
                 title: Text(widget.title),
 
                 // colorText: Colors.white,
-                trailing: CupertinoButton.filled(
+
+                trailing: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isValid ? AppStyle().accent : Colors.grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),  // borderRadius
+                    ),
+                  ),
+
                   child: Icon(Icons.check),
                   //: ClubIcons.check,
                   //size: 55,
-                  color: isValid ? AppStyle().accent : Colors.grey,
+
                   onPressed: () async {
                     // if(!isValid)return;
 
@@ -144,10 +152,10 @@ class _FormPageRenderFormlyState extends State<FormPageRenderFormly> {
                     }
                   },
                 ),
-                leadingSize: 44,
-                leading: CupertinoButton.filled(
+
+                leading: ElevatedButton(
                   child: Icon(Icons.arrow_back_ios),
-                  color: Colors.transparent,
+
                   //: ClubIcons.check,
                   //size: 55,
                  // color: isValid ? AppStyle().accent : Colors.grey,

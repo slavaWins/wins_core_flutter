@@ -3,13 +3,12 @@ import 'package:flutter/services.dart';
 
 enum AppTheme { light, dark }
 
-
+//style
 class AppStyle {
 
   AppStyle._();
   static final AppStyle _instance = AppStyle._();
   factory AppStyle() => _instance;
-
 
 
   static AppTheme theme = AppTheme.light;
