@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../components/InputText.dart';
@@ -239,7 +238,7 @@ class _ElementFormlyState extends State<ElementFormly> {
             ),
 
           if (widget.data.type == "checkbox") ...[
-            CupertinoListTile(
+            ListTile(
               onTap: () {
                 final newValue = !valueBool;
                 setState(() {
@@ -247,7 +246,6 @@ class _ElementFormlyState extends State<ElementFormly> {
                 });
                 widget.onChange?.call(newValue);
               },
-              padding: EdgeInsetsGeometry.all(0),
               title: Text(
                 widget.data.props?.label ?? "",
                 style: AppStyle().body1(color: widget.color),
@@ -255,8 +253,9 @@ class _ElementFormlyState extends State<ElementFormly> {
               trailing: Transform.scale(
                 scale: 0.7,
                 // уменьшаем размер (0.7 = 70% от оригинального размера)
-                child: CupertinoSwitch(
-                  thumbColor: AppStyle().background,
+                child: Switch(
+                 // thumbColor:  AppStyle().background,
+
                   inactiveTrackColor: AppStyle().black.withAlpha(90),
 
                   activeTrackColor: AppStyle().accent,
@@ -301,47 +300,65 @@ class _ElementFormlyState extends State<ElementFormly> {
   }
 
   void _showSelectDialog() {
-
-    /*
-    var xz = widget.data.props!.options;
-    xz = [...xz, ...xz];
-    xz = [...xz, ...xz];
-    xz = [...xz, ...xz];
-    widget.data.props!.options = xz;
-*/
-
-    showCupertinoModalPopup(
-
-      
+    showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-
-
-        title: Text(widget.data.props?.label ?? 'Выберите', style: AppStyle().body0( )),
-        actions:
-            widget.data.props?.options
-                .map(
-                  (option) => CupertinoActionSheetAction(
-                    
-                    onPressed: () {
-                      setState(() {
-                        valResult = option.value ?? "";
-                      });
-                      widget.onChange?.call(option.value ?? "");
-                      Navigator.pop(context);
-                    },
-                    child: Text(option.label , style: AppStyle().body1( )),
-                  ),
-                )
-                .toList() ??
-            [],
-        cancelButton: CupertinoActionSheetAction(
-
-          onPressed: () => Navigator.pop(context),
-          child:   Text('Отмена', style: AppStyle().body0( )),
-
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) => Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  widget.data.props?.label ?? 'Выберите',
+                  style: AppStyle().body0(),
+                ),
+              ),
+              Divider(height: 1),
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    ...widget.data.props?.options.map(
+                          (option) => ListTile(
+                        title: Text(
+                          option.label,
+                          style: AppStyle().body1(),
+                          textAlign: TextAlign.center,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            valResult = option.value ?? "";
+                          });
+                          widget.onChange?.call(option.value ?? "");
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ).toList() ?? [],
+                  ],
+                ),
+              ),
+              Divider(height: 1),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                style: TextButton.styleFrom(
+                  minimumSize: Size(double.infinity, 48),
+                ),
+                child: Text(
+                  'Отмена',
+                  style: AppStyle().body0(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
 }
