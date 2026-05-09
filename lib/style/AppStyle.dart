@@ -121,6 +121,7 @@ class AppStyle {
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 
@@ -142,6 +143,7 @@ class AppStyle {
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 
@@ -153,6 +155,7 @@ class AppStyle {
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 
@@ -174,6 +177,7 @@ class AppStyle {
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 
@@ -184,6 +188,7 @@ class AppStyle {
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 
@@ -206,6 +211,7 @@ class AppStyle {
       color: color ?? black,
       fontFamily: "Main",
       letterSpacing: 0.0,
+      height: 1,
     );
   }
 

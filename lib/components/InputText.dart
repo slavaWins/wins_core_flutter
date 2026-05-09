@@ -124,7 +124,7 @@ class _InputTextState extends State<InputText>
           curve: Curves.easeInCubic,
           //margin: EdgeInsetsGeometry.only(bottom: _hasFocus ? 0 : 0),
           padding: (!widget.isHideDecoration) ? EdgeInsetsGeometry.only(
-              bottom: 10) : null,
+              bottom: 9) : null,
           decoration: (!widget.isHideDecoration) ? BoxDecoration(
             border: Border(
               bottom: BorderSide(
