@@ -120,7 +120,6 @@ class _TabRenderFormlyState extends State<TabRenderFormly> {
               },
 
               title: Text(field.name! , style: AppStyle().body1()),
-              //leading: Icon(CupertinoIcons.person),
 
               leading: Icon( FormlyIconMapping(field.tag!), color: AppStyle().black, size: 24),
               trailing: Row(
