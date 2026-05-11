@@ -118,10 +118,11 @@ class _InputTextState extends State<InputText>
         AnimatedContainer(
           duration: Duration(milliseconds: 120),
           curve: Curves.easeInCubic,
+          margin: EdgeInsetsGeometry.zero ,
           //margin: EdgeInsetsGeometry.only(bottom: _hasFocus ? 0 : 0),
           padding: (!widget.isHideDecoration)
               ? EdgeInsetsGeometry.only(bottom: 1)
-              : null,
+              : EdgeInsets.zero  ,
           decoration: (!widget.isHideDecoration)
               ? BoxDecoration(
                   border: Border(
@@ -143,11 +144,13 @@ class _InputTextState extends State<InputText>
             obscureText: widget.obscureText,
 
 
+
             //   suffix: widget.suffix,
             keyboardType: widget.keyboardType,
             cursorColor: (widget.color ?? AppStyle().black),
             focusNode: _focusNode,
             decoration: InputDecoration(
+              isDense: true,  // <- КЛЮЧЕВОЙ ПАРАМЕТР
               hintText: widget.placeholder,
               hintStyle: TextStyle(
                 fontSize: 16,
@@ -156,12 +159,13 @@ class _InputTextState extends State<InputText>
                 color: ((widget.color ?? AppStyle().black)).withAlpha(142),
               ),
               border: InputBorder.none,
+
               contentPadding: (!widget.isHideDecoration)
                   ? EdgeInsets.only(
                       bottom: AppStyle().paddingCard / 2,
                       top: AppStyle().paddingCard / 8,
                     )
-                  : EdgeInsets.only(),
+                  : EdgeInsets.zero ,
               fillColor: Colors.transparent,
             ),
 
