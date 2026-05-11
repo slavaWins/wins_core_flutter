@@ -15,12 +15,14 @@ class AppStyle {
 
    Color  base_white = Colors.white;
   Color  base_black = Colors.black;
-  Color  primary =  Color.fromARGB(255, 115, 185, 245) ;
 
   //Color  base_primary_gray =  Color.fromARGB(255, 43, 82, 119) ;
 
   Color  base_background_black = Color.fromARGB(255, 23, 33,43);
   Color  base_background_light = Color.fromARGB(255, 212, 212,212);
+
+  Color  base_primary_dark =  Color.fromARGB(255, 115, 185, 245) ;
+  Color  base_primary_light =  Color.fromARGB(255, 0, 87, 161) ;
 
 
   double  paddingScreen = 10;
@@ -36,6 +38,10 @@ class AppStyle {
 
 
 
+
+   Color get primary => theme == AppTheme.light
+       ? base_primary_light
+       : base_primary_dark;
 
    Color get background => theme == AppTheme.light
       ? base_background_light
@@ -100,6 +106,7 @@ class AppStyle {
   double base_font_scale_h = 1;
   double base_font_szie_h1 = 36;
   FontWeight font_WeightNormal =  FontWeight.w400;
+
 
 
   TextStyle h1({Color? color}) {
@@ -213,6 +220,8 @@ class AppStyle {
       height: 1,
     );
   }
+
+
 
 }
 

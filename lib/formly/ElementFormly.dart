@@ -222,7 +222,7 @@ class _ElementFormlyState extends State<ElementFormly> {
                   color: (isInvalid != null && isShowValidationErrorCan)
                       ? Colors.red
                       : widget.color,
-                  suffix: Icon(Icons.arrow_drop_down_outlined),
+                  suffix: Icon(Icons.arrow_drop_down_outlined, color: AppStyle().black,),
                   label: widget.data.props?.label,
                   placeholder: widget.data.props?.placeholder ?? "Выберите",
                   controller: TextEditingController(
@@ -302,10 +302,10 @@ class _ElementFormlyState extends State<ElementFormly> {
   void _showSelectDialog() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppStyle().black,
       builder: (BuildContext context) => Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppStyle().white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
         ),
         child: SafeArea(

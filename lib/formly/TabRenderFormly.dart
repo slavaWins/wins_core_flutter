@@ -132,7 +132,7 @@ class _TabRenderFormlyState extends State<TabRenderFormly> {
                   ),
 
                     const SizedBox(width: 8),*/
-                    Icon(Icons.forward, color: AppStyle().black, size: 20),
+                    Icon(Icons.chevron_right_rounded, color: AppStyle().black, size: 20),
 
                 ],
               ),

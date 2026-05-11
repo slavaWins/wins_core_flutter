@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class WinsCoreConfig {
   static String domainApi = "";
   static String? jwt;
+  static String? cryptToken;
 
   
 

@@ -142,6 +142,7 @@ class _InputTextState extends State<InputText>
 
             obscureText: widget.obscureText,
 
+
             //   suffix: widget.suffix,
             keyboardType: widget.keyboardType,
             cursorColor: (widget.color ?? AppStyle().black),
