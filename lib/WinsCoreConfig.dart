@@ -7,6 +7,7 @@ class WinsCoreConfig {
   static String domainApi = "";
   static String? jwt;
   static String? cryptToken;
+  static IconData chevron_right =  Icons.chevron_right;
 
   
 
