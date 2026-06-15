@@ -46,7 +46,9 @@ class FormlyApiService extends ChangeNotifier {
       }
 
       if (customFormHandleEndpoint != null) {
+
         url = baseUrl + customFormHandleEndpoint! + "/Handle";
+
       }
 
 
@@ -151,6 +153,9 @@ class FormlyApiService extends ChangeNotifier {
 
       if (customFormHandleEndpoint != null) {
         url = baseUrl + customFormHandleEndpoint! + "/Form";
+        if(this.projectId!=null){
+          url+="?id="+this.projectId.toString();
+        }
       }
 
 

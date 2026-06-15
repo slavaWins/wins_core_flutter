@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 import '../components/InputText.dart';
 import '../style/AppStyle.dart';
 import 'BuisnesLayer/FormlyField.dart';
-
+import 'OptionsBottomSheet.dart';
 
 typedef DualValueChanged<T1, T2> = void Function(T1 first, T2 second);
 
@@ -46,29 +45,25 @@ class _ElementFormlyState extends State<ElementFormly> {
     // TODO: implement initState
     super.initState();
 
-
     valResult = widget.val ?? "";
 
     if (widget.data.type == "select") {
-
-      var _selectedNowHave = widget.data.props!.options          .where(            (opt) => opt.value.toString() == valResult.toString()).firstOrNull;
-      if(_selectedNowHave==null){
+      var _selectedNowHave = widget.data.props!.options
+          .where((opt) => opt.value.toString() == valResult.toString())
+          .firstOrNull;
+      if (_selectedNowHave == null) {
         print("select value not init start. Autofix");
-        _selectedNowHave =  widget.data.props!.options.firstOrNull;
+        _selectedNowHave = widget.data.props!.options.firstOrNull;
 
-        if(_selectedNowHave!=null) {
+        if (_selectedNowHave != null) {
           valResult = _selectedNowHave.value.toString();
           print(valResult);
           widget.onChange?.call(valResult);
-        }else{
+        } else {
           print("_selectedNowHave в опшинах нет вариантов!!!");
         }
       }
-
     }
-
-
-
 
     _controller = TextEditingController(text: valResult.toString());
 
@@ -82,10 +77,8 @@ class _ElementFormlyState extends State<ElementFormly> {
       widget.data.type = "string";
     }
 
-
     ValidCheckOnStart();
   }
-
 
   void ValidCheckOnStart() async {
     await Future.delayed(Duration(milliseconds: 200));
@@ -94,7 +87,6 @@ class _ElementFormlyState extends State<ElementFormly> {
       widget.onValidChange!(isInvalid == null);
     }
   }
-
 
   void ValueSetTo(dynamic val) {
     valResult = val;
@@ -112,7 +104,7 @@ class _ElementFormlyState extends State<ElementFormly> {
   void ValidateValue(dynamic val) {
     var props = widget.data.props!;
 
-    if (props.isCanBeNull == true && val.toString().length==0) {
+    if (props.isCanBeNull == true && val.toString().length == 0) {
       isInvalid = null;
       return;
     }
@@ -156,8 +148,7 @@ class _ElementFormlyState extends State<ElementFormly> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(widget.data.hide_ == true){
+    if (widget.data.hide_ == true) {
       //return Text("XXX HIDE");
     }
 
@@ -166,20 +157,19 @@ class _ElementFormlyState extends State<ElementFormly> {
       spacing: 0,
       children: [
         //Text(widget.data.key.toString()),
-        SizedBox(height: 16),
-
         if (widget.data.key != "id") ...[
           if (widget.data.props?.label != null &&
+              widget.data.hide_ == false &&
               widget.data.type != "string" &&
               widget.data.type != "textarea" &&
               widget.data.type != "select" &&
               widget.data.type != "checkbox") ...[
-            Text(
-              widget.data.props?.label ?? "",
-              style: AppStyle().body2(),
-            ),
+            Text(widget.data.props?.label ?? "", style: AppStyle().body2()),
             SizedBox(height: 11),
           ],
+
+          if (widget.data.type == "labeltext")
+            Text(widget.val ?? "", style: AppStyle().body1()),
 
           if (widget.data.type == "string" || widget.data.type == "textarea")
             InputText(
@@ -222,7 +212,10 @@ class _ElementFormlyState extends State<ElementFormly> {
                   color: (isInvalid != null && isShowValidationErrorCan)
                       ? Colors.red
                       : widget.color,
-                  suffix: Icon(Icons.arrow_drop_down_outlined, color: AppStyle().black,),
+                  suffix: Icon(
+                    Icons.arrow_drop_down_outlined,
+                    color: AppStyle().black,
+                  ),
                   label: widget.data.props?.label,
                   placeholder: widget.data.props?.placeholder ?? "Выберите",
                   controller: TextEditingController(
@@ -254,8 +247,7 @@ class _ElementFormlyState extends State<ElementFormly> {
                 scale: 0.7,
                 // уменьшаем размер (0.7 = 70% от оригинального размера)
                 child: Switch(
-                 // thumbColor:  AppStyle().background,
-
+                  // thumbColor:  AppStyle().background,
                   inactiveTrackColor: AppStyle().black.withAlpha(90),
 
                   activeTrackColor: AppStyle().accent,
@@ -295,11 +287,28 @@ class _ElementFormlyState extends State<ElementFormly> {
           ],
           SizedBox(height: 22),
         ],
+
+        if (widget.data.key != "id" && widget.data.hide_ == false)
+          SizedBox(height: 16),
       ],
     );
   }
 
   void _showSelectDialog() {
+    OptionsBottomSheet.show(
+      context: context,
+      label: widget.data.props?.label ?? 'Выберите',
+      options: widget.data.props!.options,
+      onSelected: (v) {
+        setState(() {
+          valResult = v;
+        });
+        widget.onChange?.call(v);
+        //   Navigator.pop(context);
+      },
+    );
+
+    return;
     showModalBottomSheet(
       context: context,
       backgroundColor: AppStyle().black,
@@ -324,22 +333,25 @@ class _ElementFormlyState extends State<ElementFormly> {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    ...widget.data.props?.options.map(
-                          (option) => ListTile(
-                        title: Text(
-                          option.label,
-                          style: AppStyle().body1(),
-                          textAlign: TextAlign.center,
-                        ),
-                        onTap: () {
-                          setState(() {
-                            valResult = option.value ?? "";
-                          });
-                          widget.onChange?.call(option.value ?? "");
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ).toList() ?? [],
+                    ...widget.data.props?.options
+                            .map(
+                              (option) => ListTile(
+                                title: Text(
+                                  option.label,
+                                  style: AppStyle().body1(),
+                                  textAlign: TextAlign.center,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    valResult = option.value ?? "";
+                                  });
+                                  widget.onChange?.call(option.value ?? "");
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            )
+                            .toList() ??
+                        [],
                   ],
                 ),
               ),
@@ -349,10 +361,7 @@ class _ElementFormlyState extends State<ElementFormly> {
                 style: TextButton.styleFrom(
                   minimumSize: Size(double.infinity, 48),
                 ),
-                child: Text(
-                  'Отмена',
-                  style: AppStyle().body0(),
-                ),
+                child: Text('Отмена', style: AppStyle().body0()),
               ),
             ],
           ),
@@ -360,5 +369,4 @@ class _ElementFormlyState extends State<ElementFormly> {
       ),
     );
   }
-
 }

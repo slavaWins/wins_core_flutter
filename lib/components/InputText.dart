@@ -63,11 +63,20 @@ class _InputTextState extends State<InputText>
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _focusNode.requestFocus();
 
+
+        if (widget.controller != null && widget.controller!.text.isNotEmpty) {
+          widget.controller!.selection = TextSelection.collapsed(
+            offset: widget.controller!.text.length,
+          );
+        }
+
+        /*
         if (widget.controller != null)
           widget!.controller!.selection = TextSelection.fromPosition(
             TextPosition(offset: widget!.controller!.text.length),
           );
-        //widget!.controller!.selection = TextSelection.collapsed(             offset: widget!.controller!.text.length,          );
+        */
+
       });
     }
   }
