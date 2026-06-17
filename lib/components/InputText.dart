@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../style/AppStyle.dart';
 
@@ -14,6 +15,7 @@ class InputText extends StatefulWidget {
   final VoidCallback? onEditingComplete;
   final VoidCallback? onEndFocus;
   final ValueChanged<String>? onSubmitted;
+  final Function(LogicalKeyboardKey key, bool isShiftPressed)? onKey;
   final Widget? suffix;
   final Color? color;
 
@@ -40,6 +42,7 @@ class InputText extends StatefulWidget {
     this.isTextarea = false,
     this.isAutoFocusOnStart = false,
     this.isHideDecoration = false,
+    this.onKey ,
   }) : super(key: key);
 
   @override
@@ -56,7 +59,25 @@ class _InputTextState extends State<InputText>
   void initState() {
     super.initState();
 
-    _focusNode = FocusNode();
+    _focusNode = FocusNode(
+      onKeyEvent: (FocusNode node, KeyEvent event) {
+        if (event is KeyDownEvent) {
+
+          if(widget.onKey!=null){
+            widget.onKey!(event.logicalKey, HardwareKeyboard.instance.isShiftPressed);
+          }
+
+
+/*
+          if (event.logicalKey == LogicalKeyboardKey.enter) {
+            return KeyEventResult.handled; // Prevents further propagation
+          }
+*/
+        }
+        return KeyEventResult.ignored; // Lets other widgets handle the key
+      },
+    );
+
     _focusNode.addListener(_onFocusChange);
 
     if (widget.isAutoFocusOnStart) {
@@ -65,9 +86,7 @@ class _InputTextState extends State<InputText>
 
 
         if (widget.controller != null && widget.controller!.text.isNotEmpty) {
-          widget.controller!.selection = TextSelection.collapsed(
-            offset: widget.controller!.text.length,
-          );
+          //widget.controller!.selection = TextSelection.collapsed(            offset: widget.controller!.text.length,          );
         }
 
         /*
@@ -88,6 +107,9 @@ class _InputTextState extends State<InputText>
   }
 
   void _onFocusChange() {
+
+
+
     setState(() {
       _hasFocus = _focusNode.hasFocus;
     });
