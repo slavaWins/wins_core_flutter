@@ -4,6 +4,7 @@ import 'package:toastification/toastification.dart';
 import 'package:wins_core_flutter/formly/BuisnesLayer/ResponseContractOfFormlyFieldResponse.dart';
 import 'package:wins_core_flutter/formly/FormFormly.dart';
 import 'package:wins_core_flutter/formly/FormlyApiService.dart';
+import 'package:wins_core_flutter/helpers/ToastEasy.dart';
 import 'package:wins_core_flutter/style/AppStyle.dart';
 
 class FormHandleMrp extends StatefulWidget {
@@ -70,6 +71,12 @@ class _FormHandleMrpState extends State<FormHandleMrp> {
     });
 
     var respnse = await widget.formlyService.getFormConfigurationFromServer();
+
+    if(respnse.isSuccess==false){
+    ToastEasy.Error(respnse.errorMessage ?? "Ошибка");
+      return;
+    }
+
     setState(() {
       responseFormData = respnse;
     });

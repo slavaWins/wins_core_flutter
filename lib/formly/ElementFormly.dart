@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wins_core_flutter/formly/BuisnesLayer/OptionFormly.dart';
 
 import '../components/InputText.dart';
 import '../style/AppStyle.dart';
@@ -178,7 +179,7 @@ class _ElementFormlyState extends State<ElementFormly> {
                   ? Colors.red
                   : widget.color,
               label: widget.data.props?.label,
-              placeholder: widget.data.props?.placeholder ?? "Text",
+              placeholder: widget.data.props?.placeholder ?? "",
               controller: _controller,
               onSubmitted: (b) {
                 if (widget.onSubmit != null) widget.onSubmit!(true);
@@ -222,7 +223,7 @@ class _ElementFormlyState extends State<ElementFormly> {
                     text: widget.data.props?.options
                         .firstWhere(
                           (opt) => opt.value == valResult,
-                          orElse: () => widget.data.props!.options.first,
+                          orElse: () => widget.data.props!.options!.firstOrNull ?? OptionFormly(label: "Нет данных", value: "0"),
                         )
                         .label,
                   ),
